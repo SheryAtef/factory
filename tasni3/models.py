@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 
 class Fabric(models.Model):
     code = models.CharField(max_length=10)
@@ -15,6 +16,7 @@ class Fabric(models.Model):
     color = models.CharField(max_length=15, choices=COLOR_CHOICES)
     quantity = models.FloatField()
 
+    
     def publish(self):
          self.save()
 
