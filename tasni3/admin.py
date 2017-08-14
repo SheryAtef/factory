@@ -36,16 +36,16 @@ admin.site.register(Kasa, KasaAdmin)
 
 class KasaFabricsAdmin(admin.ModelAdmin):
 
-    global_NumberOfTimes=0
-
+    global_NumberOfTimes=1
 
     def get_Net(self,obj):
         global global_NumberOfTimes
         #print(KasaFabrics.objects.all().count())
         #print("aho number of times")
-        print(self.global_NumberOfTimes)
-        if KasaFabrics.objects.all().count() > self.global_NumberOfTimes:
+        print "numberofTimes aho" , self.global_NumberOfTimes
+        if KasaFabrics.objects.all().count() >= self.global_NumberOfTimes:
            taken = obj.fabricQuanity
+           print "taken aho",taken
            net = 0.0
            total=0.0
            instance=Fabric.objects.filter(code=obj.fabric.code, material=obj.fabric.material,color= obj.fabric.color).values('quantity')[0]
@@ -55,13 +55,11 @@ class KasaFabricsAdmin(admin.ModelAdmin):
            print(taken)
            net = total-taken
            Fabric.objects.filter(code=obj.fabric.code, material=obj.fabric.material,color= obj.fabric.color).update(quantity=net)
-           self.global_NumberOfTimes=+1
-
-        #taken=0
-        #net =0.0
-        #total=0.0
+           self.global_NumberOfTimes=self.global_NumberOfTimes+1
+           print("shooof")
+           print (self.global_NumberOfTimes)
         return "Done"
-
+        print (global_NumberOfTimes)
     list_display = ('fabric','fabricQuanity','kasa','get_Net')
 admin.site.register(KasaFabrics,KasaFabricsAdmin)
 
